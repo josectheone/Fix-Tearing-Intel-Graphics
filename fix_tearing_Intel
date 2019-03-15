@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Solicita acesso root
+if [[ $UID != 0 ]]; then
+	echo "Por favor, execute este script como root:"
+	echo "sudo $0 $*"
+	exit 1
+fi
+
+mkdir /etc/X11/xorg.conf.d/
+echo -e 'Section "Device"\n Identifier "Intel Graphics"\n Driver "Intel"\n Option "AccelMethod" "sna"\n Option "TearFree" "true"\nEndSection' | sudo tee /etc/X11/xorg.conf.d/20-intel.conf
+
+echo "Proceso completado com sucesso"
+echo "Reinicie o computador"
